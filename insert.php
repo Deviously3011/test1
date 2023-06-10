@@ -12,8 +12,7 @@ $options = [
     PDO::ATTR_EMULATE_PREPARES   => false,
 ];
 try 
-{
-     $pdo = new PDO($dsn, $user, $pass, $options);
+{ $pdo = new PDO($dsn, $user, $pass, $options);
      echo "Connectie gemaakt!";
 } 
 catch (\PDOException $e) 
@@ -22,14 +21,13 @@ catch (\PDOException $e)
 }
 
 
-// Verwerken van het formulier
+// Formulier verwerken
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Ontvang de gegevens van het formulier
     $product_naam = $_POST["product_naam"];
     $prijs_per_stuk = $_POST["prijs_per_stuk"];
     $omschrijving = $_POST["omschrijving"];
-
-    // Query voorbereiden met named parameters
+// Query voorbereiden
     $query = 'INSERT INTO producten (product_naam, prijs_per_stuk, omschrijving) VALUES (:product_naam, :prijs_per_stuk, :omschrijving)';
     $statement = $pdo->prepare($query);
 
@@ -40,25 +38,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         "omschrijving" => $omschrijving
     );
 
-    // Query uitvoeren
+    //uitvoeren
     $result = $statement->execute($data);
 
-    // Controleer of de query succesvol was
+    // Controleer voor succes
     if ($result) {
-        echo "Product succesvol toegevoegd.";
+        echo "toegevoegd.";
     } else {
-        echo "Er is een fout opgetreden bij het toevoegen van het product.";
+        echo "fout opgetreden";
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
     <title>Product Toevoegen</title>
 </head>
 <body>
-    <h1>Product Toevoegen</h1>
+    <h1>voegen product  </h1>
     <form method="POST" action="insert.php">
         <label for="product_naam">Productnaam:</label>
         <input type="text" name="product_naam" required><br><br>
